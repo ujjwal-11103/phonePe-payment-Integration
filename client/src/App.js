@@ -5,7 +5,6 @@ import Payment from './pages/Payment';
 import Success from './pages/Success';
 import Failure from './pages/Failure';
 
-
 const App = () => {
   return (
     <Router>
