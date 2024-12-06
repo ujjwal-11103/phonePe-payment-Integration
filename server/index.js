@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 let salt_key = process.env.SALT_KEY;
 let merchant_id = process.env.MERCHANT_ID;
 
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+// const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 app.get("/", (req, res) => {
     res.send("Server is running");
