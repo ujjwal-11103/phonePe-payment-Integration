@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Payment from './pages/Payment';
 import Success from './pages/Success';
 import Failure from './pages/Failure';
+import Register from './pages/Register';
 
 const App = () => {
   return (
@@ -11,6 +12,7 @@ const App = () => {
       <Routes>
         {/* Define different routes here */}
         <Route path="/" element={<Home />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/success" element={<Success />} />
         <Route path="/failure" element={<Failure />} />
