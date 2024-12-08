@@ -19,7 +19,8 @@ const RegistrationForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8000/auth/register', formData);
+            // const response = await axios.post('http://localhost:8000/auth/register', formData);
+            const response = await axios.post('https://phonepe-payment-integration-server.onrender.com/auth/register', formData);
             console.log('Response:', response.data);
             alert('Registration successful!');
         } catch (error) {

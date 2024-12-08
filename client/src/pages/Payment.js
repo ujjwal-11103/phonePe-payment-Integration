@@ -16,7 +16,8 @@ const Payment = () => {
     const handlePayment = async (e) => {
         e.preventDefault()
         try {
-            const res = await axios.post('http://localhost:8000/order', { ...data })
+            // const res = await axios.post('http://localhost:8000/order', { ...data })
+            const res = await axios.post('https://phonepe-payment-integration-server.onrender.com/order', { ...data })
             console.log(res)
             if (res.data && res.data.data.instrumentResponse.redirectInfo.url) {
                 window.location.href = res.data.data.instrumentResponse.redirectInfo.url;
