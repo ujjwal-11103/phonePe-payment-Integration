@@ -1,5 +1,7 @@
 import crypto from "crypto";
 import axios from "axios";
+import dotenv from "dotenv";
+dotenv.config();
 
 const salt_key = process.env.SALT_KEY;
 const merchant_id = process.env.MERCHANT_ID;

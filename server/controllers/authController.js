@@ -1,6 +1,31 @@
-export const registerUser = (req, res) => {
-    const { name, email, password } = req.body;
+import { sendEmail } from "../services/emailService.js";
+
+export const registerUser = async (req, res) => {
+  const { name, email, password } = req.body;
+
+  try {
     console.log("Received registration:", { name, email, password });
-    res.status(200).json({ message: "Registration successful!" });
-  };
+
+    // Simulate user registration (e.g., save to DB here)
+    const confirmationEmail = {
+      to: email,
+      subject: "Welcome to Our Service!",
+      text: `Hi ${name},\n\nThank you for registering! We're excited to have you on board.`,
+      html: `<p>Hi <strong>${name}</strong>,</p>
+             <p>Thank you for registering! We're excited to have you on board.</p>`,
+    };
+
+    const emailResult = await sendEmail(confirmationEmail);
+
+    if (!emailResult.success) {
+      return res.status(500).json({ message: "Registration successful, but email failed to send." });
+    }
+
+    res.status(200).json({ message: "Registration successful! Confirmation email sent." });
+  } catch (error) {
+    console.error("Registration Error:", error);
+    res.status(500).json({ message: "Registration failed", error });
+  }
+};
+
   

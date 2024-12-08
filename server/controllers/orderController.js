@@ -1,13 +1,20 @@
 import crypto from "crypto";
 import axios from "axios";
+import dotenv from "dotenv";
+dotenv.config();
+
 
 const salt_key = process.env.SALT_KEY;
 const merchant_id = process.env.MERCHANT_ID;
+const email = process.env.EMAIL_USER;
+const pass = process.env.EMAIL_PASSWORD;
 
 export const createOrder = async (req, res) => {
     try {
         const { transactionId, MUID, name, amount, number } = req.body;
         const merchantTransactionId = transactionId;
+
+        console.log("Request Body:", req.body);
 
         const data = {
             merchantId: merchant_id,
@@ -15,7 +22,7 @@ export const createOrder = async (req, res) => {
             merchantUserId: MUID,
             name,
             amount: amount * 100,
-            redirectUrl: "http://localhost:3000/failure",
+            redirectUrl: "http://localhost:3000/success",
             redirectMode: "REDIRECT",
             mobileNumber: number,
             paymentInstrument: { type: "PAY_PAGE" },
