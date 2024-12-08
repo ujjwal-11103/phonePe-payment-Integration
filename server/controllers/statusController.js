@@ -28,7 +28,7 @@ export const getOrderStatus = async (req, res) => {
     try {
         const response = await axios.request(options);
         console.log("Payment Status Response:", response.data);
-        const url = response.data.success ? `http://localhost:3000/success` : `http://localhost:3000/failure`;
+        const url = response.data.success ? `https://jobbie.io/success` : `https://jobbie.io/failure`;
         return res.redirect(url);
     } catch (error) {
         console.error("Error checking payment status:", error);

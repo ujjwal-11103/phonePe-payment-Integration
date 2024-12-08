@@ -22,8 +22,10 @@ export const createOrder = async (req, res) => {
             merchantUserId: MUID,
             name,
             amount: amount * 100,
-            redirectUrl: "http://localhost:3000/success",
+            // redirectUrl: "http://localhost:3000/success",
+            redirectUrl: "https://jobbie.io/",
             redirectMode: "REDIRECT",
+            callbackUrl: "https://jobbie.io/",
             mobileNumber: number,
             paymentInstrument: { type: "PAY_PAGE" },
         };
