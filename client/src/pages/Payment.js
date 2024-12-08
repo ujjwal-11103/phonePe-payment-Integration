@@ -7,7 +7,7 @@ const Payment = () => {
 
     const data = {
         name: 'Ujjwal Upadhyay',
-        amount: 1,
+        amount: 2,
         number: '7887575591',
         MUID: "MUID" + Date.now(),
         transactionId: 'T' + Date.now(),
