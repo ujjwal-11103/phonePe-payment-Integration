@@ -6,26 +6,25 @@ dotenv.config();
 
 const salt_key = process.env.SALT_KEY;
 const merchant_id = process.env.MERCHANT_ID;
-const email = process.env.EMAIL_USER;
-const pass = process.env.EMAIL_PASSWORD;
+
 
 export const createOrder = async (req, res) => {
     try {
-        const { transactionId, MUID, name, amount, number } = req.body;
+        const { transactionId, MUID, name, email, amount, number } = req.body;
         const merchantTransactionId = transactionId;
 
-        console.log("Request Body:", req.body);
+        console.log("Body in order Controller", req.body);
 
         const data = {
             merchantId: merchant_id,
             merchantTransactionId,
             merchantUserId: MUID,
             name,
+            email: email,
             amount: amount * 100,
-            // redirectUrl: "http://localhost:3000/success",
-            redirectUrl: "https://jobbie.io/",
-            redirectMode: "REDIRECT",
-            callbackUrl: "https://jobbie.io/",
+            redirectUrl: `http://localhost:8000/status?id=${merchantTransactionId}&email=${encodeURIComponent(email)}`,
+            redirectMode: "POST",
+            callbackUrl: `http://localhost:8000/status?id=${merchantTransactionId}&email=${encodeURIComponent(email)}`,
             mobileNumber: number,
             paymentInstrument: { type: "PAY_PAGE" },
         };
@@ -37,8 +36,8 @@ export const createOrder = async (req, res) => {
         const sha256 = crypto.createHash("sha256").update(string).digest("hex");
         const checksum = sha256 + "###" + saltIndex;
 
-        // const prod_URL = "https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay";
-        const prod_URL = "https://api.phonepe.com/apis/hermes/pg/v1/pay";
+        const prod_URL = "https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay";
+        // const prod_URL = "https://api.phonepe.com/apis/hermes/pg/v1/pay";
 
         const options = {
             method: "POST",
@@ -53,8 +52,7 @@ export const createOrder = async (req, res) => {
 
         try {
             const response = await axios.request(options);
-            console.log("Response from PhonePe:", response.data);
-            console.log("Response from PhonePe:", response.data?.data?.instrumentResponse?.redirectInfo);
+            console.log("Response from PhonePe during initiation:", response.data);
             return res.json(response.data);
         } catch (error) {
             console.error("Payment Error:", error);

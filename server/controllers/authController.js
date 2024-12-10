@@ -28,3 +28,29 @@ export const registerUser = async (req, res) => {
   }
 };
 
+
+// Email related
+export const sendMailService = async (req, res) => {
+  const { email, subject, message, html } = req.body;
+
+  try {
+    const emailResult = await sendEmail({
+      to: email,
+      subject,
+      text: message,
+      html
+    });
+
+    if (!emailResult.success) {
+      return res.status(500).json({ message: "Email failed to send." });
+    }
+
+    res.status(200).json({ message: "Email sent successfully." });
+  } catch (error) {
+    console.error("Error sending email:", error);
+    res.status(500).json({ message: "Error sending email.", error });
+  }
+}
+
+
+
