@@ -19,8 +19,8 @@ export const getOrderStatus = async (req, res) => {
 
     const options = {
         method: "GET",
-        url: `https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/status/${merchant_id}/${merchantTransactionId}`,
-        // url: `https://api.phonepe.com/apis/hermes/pg/v1/status/${merchant_id}/${merchantTransactionId}`,
+        // url: `https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/status/${merchant_id}/${merchantTransactionId}`,
+        url: `https://api.phonepe.com/apis/hermes/pg/v1/status/${merchant_id}/${merchantTransactionId}`,
         headers: {
             accept: "application/json",
             "Content-Type": "application/json",
@@ -44,7 +44,7 @@ export const getOrderStatus = async (req, res) => {
             };
 
             try {
-                await axios.post("http://localhost:8000/auth/send-confirmation-email", emailData);
+                await axios.post("https://phonepe-payment-integration-server.onrender.com/auth/send-confirmation-email", emailData);
                 console.log("Confirmation email sent successfully.");
             } catch (emailError) {
                 console.error("Error sending email:", emailError.message);
@@ -60,7 +60,7 @@ export const getOrderStatus = async (req, res) => {
             };
 
             try {
-                await axios.post("http://localhost:8000/auth/send-confirmation-email", emailData);
+                await axios.post("https://phonepe-payment-integration-server.onrender.com/auth/send-confirmation-email", emailData);
                 console.log("Confirmation email sent successfully.");
             } catch (emailError) {
                 console.error("Error sending email:", emailError.message);
@@ -68,8 +68,8 @@ export const getOrderStatus = async (req, res) => {
         }
 
         // redirection
-        // const url = response.data.success ? `https://jobbie.io/payment` : `https://jobbie.io/failure`;
-        const url = response.data.success ? `http://localhost:3000/success` : `http://localhost:3000/failure`;
+        // const url = response.data.success ? `http://localhost:3000/success` : `http://localhost:3000/failure`;
+        const url = response.data.success ? `https://jobbie.io/success` : `https://jobbie.io/failure`;
         return res.redirect(url);
 
     } catch (error) {

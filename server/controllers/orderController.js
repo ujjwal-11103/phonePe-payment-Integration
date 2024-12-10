@@ -10,10 +10,10 @@ const merchant_id = process.env.MERCHANT_ID;
 
 export const createOrder = async (req, res) => {
     try {
-        const { transactionId, MUID, name, email, amount, number } = req.body;
+        const { transactionId, MUID, name, email, amount, phone } = req.body;
         const merchantTransactionId = transactionId;
 
-        console.log("Body in order Controller", req.body);
+        console.log("Req body in order Controller", req.body);
 
         const data = {
             merchantId: merchant_id,
@@ -22,10 +22,12 @@ export const createOrder = async (req, res) => {
             name,
             email: email,
             amount: amount * 100,
-            redirectUrl: `http://localhost:8000/status?id=${merchantTransactionId}&email=${encodeURIComponent(email)}`,
+            // redirectUrl: `http://localhost:8000/status?id=${merchantTransactionId}&email=${encodeURIComponent(email)}`,
+            redirectUrl: `https://phonepe-payment-integration-server.onrender.com/status?id=${merchantTransactionId}&email=${encodeURIComponent(email)}`,
             redirectMode: "POST",
-            callbackUrl: `http://localhost:8000/status?id=${merchantTransactionId}&email=${encodeURIComponent(email)}`,
-            mobileNumber: number,
+            // callbackUrl: `http://localhost:8000/status?id=${merchantTransactionId}&email=${encodeURIComponent(email)}`,
+            callbackUrl: `https://phonepe-payment-integration-server.onrender.com/status?id=${merchantTransactionId}&email=${encodeURIComponent(email)}`,
+            mobileNumber: phone,
             paymentInstrument: { type: "PAY_PAGE" },
         };
 
@@ -36,8 +38,8 @@ export const createOrder = async (req, res) => {
         const sha256 = crypto.createHash("sha256").update(string).digest("hex");
         const checksum = sha256 + "###" + saltIndex;
 
-        const prod_URL = "https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay";
-        // const prod_URL = "https://api.phonepe.com/apis/hermes/pg/v1/pay";
+        // const prod_URL = "https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay";
+        const prod_URL = "https://api.phonepe.com/apis/hermes/pg/v1/pay";
 
         const options = {
             method: "POST",
